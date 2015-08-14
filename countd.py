@@ -1,16 +1,25 @@
 #!/usr/bin/python
+
 import sys
 from datetime import datetime
-arg1=sys.argv[1]
-if len(sys.argv)==2:
-	currentt=datetime.now()
-	arg2=currentt.strftime("%d/%m/%Y")
+
+arguments=sys.argv[1:]
+if "-f" in arguments:
+	format=sys.argv[2]
 else:
-	arg2=sys.argv[2]
-def countDays(date1=arg1,date2=arg2):
-	myFormat="%d/%m/%Y"
+	format="%d/%m/%Y"
+arg2=sys.argv[len(sys.argv)-1]
+if len(sys.argv) in [3,5]:
+	arg1=sys.argv[len(sys.argv)-2]
+else:
+	currentt=datetime.now()
+	arg1=currentt.strftime(format)
+
+def countDays(formatd=format,date1=arg1,date2=arg2):
+	myFormat=formatd
 	d1=datetime.strptime(date1, myFormat)
 	d2=datetime.strptime(date2, myFormat)
 	nrDays=abs(d2-d1)
 	print 'Between %s and %s are: %d days'%(date1,date2,nrDays.days)
+
 countDays()
